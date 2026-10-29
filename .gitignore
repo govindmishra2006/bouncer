@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.docker-config/
+data/
+backend/.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+frontend/node_modules/
+frontend/.next/
+frontend/next-env.d.ts
+.DS_Store
+.playwright-mcp/

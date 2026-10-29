@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #e9edf1;
+  --sheet: #fbfcfd;
+  --sheet-2: #f3f6f8;
+  --ink: #16212c;
+  --ink-2: #4a5866;
+  --ink-3: #7a8794;
+  --rule: #cfd7df;
+  --rule-strong: #aab6c2;
+  --proof: #1e7a4e;
+  --proof-bg: #e3f1e9;
+  --false: #b3261e;
+  --false-bg: #f8e5e3;
+  --warn: #9a5b00;
+  --warn-bg: #fbf0dc;
+  --focus: #2f5aa8;
+  --code-bg: #f1f4f7;
+  --diff-add: #e2f2e7;
+  --diff-del: #f9e4e2;
+
+  --v-reproduced: #c2410c;
+  --v-needs-human: #a16207;
+  --v-not-reproduced: #52606d;
+  --v-needs-info: #2f5aa8;
+  --v-duplicate: #6d5a9c;
+  --v-already-fixed: #1e7a4e;
+  --v-fabricated: #16212c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0e141a;
+    --sheet: #141c24;
+    --sheet-2: #19232d;
+    --ink: #e4e9ee;
+    --ink-2: #a3b0bc;
+    --ink-3: #75838f;
+    --rule: #26323d;
+    --rule-strong: #3a4855;
+    --proof: #5cc391;
+    --proof-bg: #12291f;
+    --false: #f08a80;
+    --false-bg: #2e1715;
+    --warn: #e7b157;
+    --warn-bg: #2a2111;
+    --focus: #8fb0f0;
+    --code-bg: #101820;
+    --diff-add: #13291c;
+    --diff-del: #2d1614;
+
+    --v-reproduced: #f2884f;
+    --v-needs-human: #e0ad4c;
+    --v-not-reproduced: #a3b0bc;
+    --v-needs-info: #8fb0f0;
+    --v-duplicate: #b5a3e0;
+    --v-already-fixed: #5cc391;
+    --v-fabricated: #e4e9ee;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-sheet-2: var(--sheet-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-proof: var(--proof);
+  --color-proof-bg: var(--proof-bg);
+  --color-false: var(--false);
+  --color-false-bg: var(--false-bg);
+  --color-warn: var(--warn);
+  --color-warn-bg: var(--warn-bg);
+  --color-code: var(--code-bg);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html,
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  font-variation-settings: "wdth" 100;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Condensed display cut of Archivo, used for the wordmark, stamps and figures. */
+.cut-narrow {
+  font-variation-settings: "wdth" 72;
+}
+.cut-wide {
+  font-variation-settings: "wdth" 125;
+}
+
+.stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  padding: 0.05em 0.45em 0.1em;
+  font-weight: 800;
+  font-variation-settings: "wdth" 72;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+.stamp[data-verdict="fabricated"] {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+.stamp-land {
+  animation: stamp-land 260ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+@keyframes stamp-land {
+  0% {
+    opacity: 0;
+    transform: scale(1.9) rotate(-9deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.94) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(-2deg);
+  }
+}
+
+.seg-active {
+  animation: seg-pulse 1s ease-in-out infinite;
+}
+@keyframes seg-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+.seg-skipped {
+  background-image: repeating-linear-gradient(-45deg, var(--rule-strong) 0 1.5px, transparent 1.5px 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp-land,
+  .seg-active {
+    animation: none;
+  }
+  * {
+    transition-duration: 0ms !important;
+  }
+}
+
+code,
+pre,
+.font-mono {
+  /* Ligatures would draw `==` and `>=` as symbols, which misrepresents code under review. */
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
+.code {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.55;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--rule-strong) transparent;
+}
